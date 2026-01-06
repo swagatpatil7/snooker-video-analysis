@@ -26,11 +26,24 @@ The frontend is responsible for presenting the user interface, handling user int
 ### 📂 Folder Structure
 
 ```
-frontend/
-├── index.html        # Main landing page
-├── style.css         # Stylesheet for UI design
-├── main.js           # JavaScript logic
-└── snooker_image.jpg # UI image asset
+snooker-video-analysis/
+├── backend/
+│   ├── server.js              # Node.js + Express backend API
+│   ├── package.json           # Backend dependencies
+│   ├── package-lock.json
+│   ├── uploads/               # Uploaded snooker videos (ignored in git)
+│   └── python/
+│       └── analyze_video.py   # Python OpenCV analysis script
+│
+├── frontend/
+│   ├── index.html             # Main UI page
+│   ├── style.css              # UI styling
+│   ├── main.js                # Frontend logic (upload, results)
+│   └── snooker_image.jpg      # UI image asset
+│
+├── .gitignore                 # Ignore node_modules, uploads, env files
+└── README.md                  # Project documentation
+
 ```
 
 ---
@@ -68,3 +81,4 @@ frontend/
 Snooker Video Analysis – Group 'L' Project
 
 ---
+
