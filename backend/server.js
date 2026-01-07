@@ -31,24 +31,29 @@ app.post("/api/upload", upload.single("video"), (req, res) => {
   const videoPath = path.join(__dirname, "uploads", req.file.filename);
   const pythonScript = path.join(__dirname, "python", "analyze_video.py");
 
+  console.log("Processing video:", videoPath);
+
   execFile("python", [pythonScript, videoPath], (error, stdout, stderr) => {
     if (error) {
       console.error("Python error:", error);
-      return res.status(500).json({ error: "Python processing failed" });
+      console.error("stderr:", stderr);
+      return res.status(500).json({ error: "Python processing failed", details: stderr });
     }
 
     try {
       const result = JSON.parse(stdout);
+      
+      // Send complete analysis back to frontend
       res.json({
         message: "Video uploaded & analyzed successfully",
-        analysis: {
-            video: req.file.filename,
-            total_frames: result.total_frames
-        }
-    });
+        video: req.file.filename,
+        analysis: result
+      });
+      
     } catch (err) {
       console.error("JSON parse error:", err);
-      res.status(500).json({ error: "Invalid Python output" });
+      console.error("Raw stdout:", stdout);
+      res.status(500).json({ error: "Invalid Python output", raw: stdout });
     }
   });
 });
@@ -57,4 +62,5 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
+// Serve uploaded videos
 app.use("/uploads", express.static("uploads"));
