@@ -81,5 +81,3 @@ snooker-video-analysis/
 Snooker Video Analysis – Group 'L' Project
 
 ---
-
-908f2c9794ed5479ee4
