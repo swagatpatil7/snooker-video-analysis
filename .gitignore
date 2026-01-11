@@ -1,0 +1,3 @@
+node_modules/
+backend/uploads/*.mp4
+.env
