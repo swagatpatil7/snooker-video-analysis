@@ -2,128 +2,165 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snooker Video Analyst</title>
-
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-  <div class="logo"> <h1><a href="#home">Snooker Video Analyst</a></h1></div>
+  <div class="logo">
+    <a href="#home">Snooker Video Analyst</a>
+  </div>
   <div class="nav-links">
-    <a href="#upload">Upload</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#analytics">Analytics</a>
+    <a href="#upload">Match</a>
+    <a href="#dashboard">Analysis</a>
+    <a href="#analytics">Performance</a>
     <a href="#about">About</a>
   </div>
 </nav>
 
+<!-- HOME -->
 <section id="home" class="container">
-  <div class="home-card">
+  <div class="home">
     <h1>Snooker Video Analysis</h1>
-    <p>AI-powered snooker match analysis using computer vision & analytics</p>
-    <img src="snooker_image.jpg" alt="Snooker Analysis" class="home-image">
+    <p class="tagline">
+      Precision. Elegance. Intelligence.
+    </p>
+
+<div class="hero-video-box">
+  <video autoplay muted loop playsinline>
+    <source src="highlight_video.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-video-overlay"></div>
+</div>
+
+    <div class="hero-actions">
+      <a href="#upload" class="btn primary">Start Analysis</a>
+      <a href="#dashboard" class="btn outline">View Demo</a>
+    </div>
   </div>
 </section>
 
-
+<!-- UPLOAD -->
 <section id="upload" class="container">
-  <h1>Match Setup</h1>
-  <p class="subtitle">Upload your snooker match video and configure analysis</p>
+  <h2>Match Setup</h2>
+  <p class="subtitle">Configure your match with professional precision</p>
 
-  <div class="upload-box">
-    <p>Drag & drop your video here</p>
-    <input type="file" id="videoInput" accept="video/*" />
-    <small>MP4 / AVI / MOV (Max 500MB)</small>
+  <div class="card upload-box">
+    <p>Drag & drop snooker match video</p>
+    <input type="file" accept="video/*">
+    <small>MP4 / AVI / MOV • Max 500MB</small>
   </div>
 
   <div class="card">
     <h3>Match Details</h3>
-    <input placeholder="Match Name" />
+    <input placeholder="Match Title">
     <div class="two-col">
-      <input placeholder="Player 1 Name" />
-      <input placeholder="Player 2 Name" />
+      <input placeholder="Player One">
+      <input placeholder="Player Two">
     </div>
   </div>
 
   <div class="card">
     <h3>Camera Angle</h3>
     <div class="angle-select">
-      <button class="angle-btn active">Top View</button>
-      <button class="angle-btn">Side View</button>
+      <button class="active">Top View</button>
+      <button>Side View</button>
     </div>
   </div>
 
-  <button class="primary-btn" id="uploadBtn">Analyze Match</button>
-  <p id="statusText"></p>
-  <pre id="resultBox"></pre>
+  <button class="btn primary full">Analyze Match</button>
 </section>
 
-
+<!-- DASHBOARD -->
 <section id="dashboard" class="container">
-  <h1>Match Analysis Dashboard</h1>
-  <p class="subtitle">Live annotated video & stats</p>
+  <h2>Match Analysis</h2>
+  <p class="subtitle">Refined insights with visual clarity</p>
 
-  <div class="grid">
-    <div class="card video-box">
-      <video id="videoPlayer" controls width="100%" style="display:none;">
-        Your browser does not support the video tag.
-      </video>
-    <p id="videoPlaceholder">Annotated Video Feed</p>
-</div>
+  <!-- STUDIO BOX -->
+  <div class="studio-box">
 
-
-    <div class="card">
-      <h3>Player Stats</h3>
-      <div class="stats">
-        <div class="stat">Player 1<br><b>Score: 47</b></div>
-        <div class="stat">Player 2<br><b>Score: 31</b></div>
-        <div class="stat">Break<br><b>24</b></div>
-        <div class="stat">Fouls<br><b>3</b></div>
-      </div>
+    <!-- VIDEO AREA -->
+    <div class="studio-video">
+      <p class="placeholder">
+        Annotated Match Video Feed<br>
+        <small>Ball tracking • Shot lines • Cue direction</small>
+      </p>
     </div>
+
+    <!-- STATS AREA -->
+    <div class="studio-stats">
+      <h3>Live Frame Stats</h3>
+
+      <div class="stat-row">
+        <span>Player One</span>
+        <b>47</b>
+      </div>
+
+      <div class="stat-row">
+        <span>Player Two</span>
+        <b>31</b>
+      </div>
+
+      <div class="stat-row">
+        <span>Current Break</span>
+        <b>24</b>
+      </div>
+
+      <div class="stat-row">
+        <span>Fouls</span>
+        <b>3</b>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
+
+<!-- ANALYTICS -->
 <section id="analytics" class="container">
-  <h1>Player Performance & Analytics</h1>
-  <p class="subtitle">Detailed statistical insights</p>
+  <h2>Performance Overview</h2>
+  <p class="subtitle">Measured excellence over time</p>
 
   <div class="analytics-grid">
     <div class="card">
-      <h3>Player 1</h3>
-      <p>Pot Success: 84.5%</p>
+      <h3>Player One</h3>
+      <p>Pot Accuracy: 84.5%</p>
       <p>Highest Break: 47</p>
     </div>
 
     <div class="card">
-      <h3>Player 2</h3>
-      <p>Pot Success: 78.2%</p>
+      <h3>Player Two</h3>
+      <p>Pot Accuracy: 78.2%</p>
       <p>Highest Break: 31</p>
     </div>
   </div>
 
-  <div class="card chart">Shot Accuracy Chart</div>
+  <div class="card chart">
+    Shot Accuracy Visualization
+  </div>
 </section>
 
+<!-- ABOUT -->
 <section id="about" class="container">
-  <h1>About Project</h1>
-  <p class="subtitle">Snooker Video Analytics using Node.js & OpenCV</p>
+  <h2>About This Project</h2>
+  <p class="subtitle">Technology meets tradition</p>
 
   <div class="card">
     <p>
-      This project allows users to upload snooker match videos and analyze gameplay
-      using computer vision. The backend uses Node.js & Express for handling uploads,
-      while OpenCV processes video analytics.
+      This project applies computer vision and data analytics to professional
+      snooker match analysis. Designed to reflect the elegance of the game,
+      while delivering modern AI-powered insights.
     </p>
   </div>
 </section>
 
-<footer>© 2025 Snooker Video Analyst | Engineering Project</footer>
+<footer>
+  © 2025 Snooker Video Analyst • Luxury Analytics Edition
+</footer>
 
-
-<script src="main.js"></script>
 </body>
 </html>
