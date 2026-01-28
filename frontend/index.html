@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snooker Video Analyst</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -27,7 +30,6 @@
     <h1>Snooker Video Analysis</h1>
     <p>Precision . Elegance . Intelligence</p>
 
-    <!-- Hero Video (no image) -->
     <div class="hero-video-box">
       <video autoplay muted loop playsinline>
         <source src="highlight_video.mp4" type="video/mp4">
@@ -58,7 +60,7 @@
     <input placeholder="Match Title">
     <div class="two-col">
       <input placeholder="Player One" id="player1Name">
-      <input placeholder="Player Two" id="player2Name" >
+      <input placeholder="Player Two" id="player2Name">
     </div>
   </div>
 
@@ -70,10 +72,8 @@
     </div>
   </div>
 
-<button class="btn analyze" id="uploadBtn">Analyze Match</button>
+  <button class="btn analyze" id="uploadBtn">Analyze Match</button>
   <p id="statusText"></p>
-
-  <!-- RESULT JSON (DEBUG / PROTOTYPE VIEW) -->
   <pre id="resultBox"></pre>
 </section>
 
@@ -84,18 +84,14 @@
 
   <div class="studio-box">
 
-    <!-- VIDEO -->
     <div class="studio-video card">
-      <video id="videoPlayer" controls width="100%" style="display:none;">
-        Your browser does not support the video tag.
-      </video>
+      <video id="videoPlayer" controls width="100%" style="display:none;"></video>
       <p id="videoPlaceholder" class="placeholder">
         Annotated Match Video Feed<br>
         <small>Ball tracking • Shot lines • Cue direction</small>
       </p>
     </div>
 
-    <!-- STATS -->
     <div class="studio-stats card">
       <h3>Live Frame Stats</h3>
 
@@ -118,7 +114,6 @@
         <span>Shots</span>
         <b id="totalShots">0</b>
       </div>
-
     </div>
 
   </div>
@@ -130,21 +125,23 @@
   <p class="subtitle">Measured excellence over time</p>
 
   <div class="analytics-grid">
-    <div class="card">
+    <div class="card clickable" id="player1Card">
       <h3>Player One</h3>
-      <p>Pot Accuracy: 84.5%</p>
-      <p>Highest Break: 47</p>
+      <p>Click to view performance</p>
     </div>
 
-    <div class="card">
+    <div class="card clickable" id="player2Card">
       <h3>Player Two</h3>
-      <p>Pot Accuracy: 78.2%</p>
-      <p>Highest Break: 31</p>
+      <p>Click to view performance</p>
     </div>
   </div>
 
+  <div style="text-align:center;margin:20px 0;">
+    <button class="btn outline" id="compareBtn">Compare</button>
+  </div>
+
   <div class="card chart">
-    Shot Accuracy Visualization
+    <canvas id="performanceChart"></canvas>
   </div>
 </section>
 

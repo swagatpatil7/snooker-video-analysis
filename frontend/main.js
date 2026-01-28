@@ -1,4 +1,4 @@
-// Camera angle toggle
+// ================= CAMERA ANGLE TOGGLE =================
 const angleButtons = document.querySelectorAll(".angle-btn");
 
 angleButtons.forEach(btn => {
@@ -8,6 +8,7 @@ angleButtons.forEach(btn => {
   });
 });
 
+// ================= UPLOAD & ANALYSIS =================
 const uploadBtn = document.getElementById("uploadBtn");
 const statusText = document.getElementById("statusText");
 const resultBox = document.getElementById("resultBox");
@@ -20,7 +21,6 @@ uploadBtn.addEventListener("click", () => {
     return;
   }
 
-  // Get player names from inputs
   const player1Name = document.getElementById("player1Name").value.trim() || "Player 1";
   const player2Name = document.getElementById("player2Name").value.trim() || "Player 2";
 
@@ -37,16 +37,12 @@ uploadBtn.addEventListener("click", () => {
   })
     .then(res => res.json())
     .then(data => {
-      console.log("Analysis result:", data);
-      
       statusText.innerText = data.message || "Analysis complete";
-      
-      // Display JSON result
+
       if (data.analysis) {
         resultBox.innerText = JSON.stringify(data.analysis, null, 2);
       }
-      
-      // Show uploaded video
+
       if (data.video) {
         const videoPlayer = document.getElementById("videoPlayer");
         const placeholder = document.getElementById("videoPlaceholder");
@@ -55,17 +51,15 @@ uploadBtn.addEventListener("click", () => {
         videoPlayer.style.display = "block";
         placeholder.style.display = "none";
       }
-      
-      // Update dashboard with real data and player names
+
       if (data.analysis && data.analysis.analysis) {
         updateDashboard(data.analysis.analysis, player1Name, player2Name);
+        prepareChartData(data.analysis.analysis, player1Name, player2Name);
       }
-      
-      // Scroll to dashboard
-      document.getElementById("dashboard").scrollIntoView({ behavior: 'smooth' });
+
+      document.getElementById("dashboard").scrollIntoView({ behavior: "smooth" });
     })
     .catch(err => {
-      console.error(err);
       statusText.innerText = "Upload or analysis failed";
       resultBox.innerText = "Error: " + err.message;
     })
@@ -74,19 +68,117 @@ uploadBtn.addEventListener("click", () => {
     });
 });
 
-// Function to update dashboard with analysis results
+// ================= DASHBOARD UPDATE =================
 function updateDashboard(analysis, player1Name, player2Name) {
-  // Update player names
   document.getElementById("p1Name").innerText = player1Name;
   document.getElementById("p2Name").innerText = player2Name;
-  
-  // Update scores
+
   document.getElementById("p1Score").innerText = analysis.player1?.score || 0;
   document.getElementById("p2Score").innerText = analysis.player2?.score || 0;
   document.getElementById("maxBreak").innerText = analysis.break || 0;
   document.getElementById("totalShots").innerText = analysis.total_shots || 0;
-  
-  console.log("Dashboard updated with:", analysis);
 }
+
+// ================= PERFORMANCE CHART LOGIC =================
+let performanceChart = null;
+let chartLabels = [];
+let p1ChartData = [];
+let p2ChartData = [];
+let p1Label = "Player One";
+let p2Label = "Player Two";
+
+function prepareChartData(analysis, player1Name, player2Name) {
+  p1Label = player1Name;
+  p2Label = player2Name;
+
+  // ✅ X-axis labels: ONLY numbers 1–10
+  chartLabels = [1,2,3,4,5,6,7,8,9,10];
+
+  // Dummy accuracy data (replace later with backend values)
+  p1ChartData = [20, 28, 35, 42, 50, 58, 65, 72, 78, 84];
+  p2ChartData = [15, 22, 30, 38, 45, 52, 60, 66, 72, 78];
+}
+
+function renderChart(datasets) {
+  const ctx = document.getElementById("performanceChart").getContext("2d");
+
+  if (performanceChart) {
+    performanceChart.destroy();
+  }
+
+  performanceChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: chartLabels,
+      datasets: datasets
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: "#f5f5f0" }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#c7c7b5" },
+          title: {
+            display: true,
+            text: "Frames",
+            color: "#f5f5f0",
+            padding: { top: 10 }
+          }
+        },
+        y: {
+          min: 20,
+          max: 90,
+          ticks: { color: "#c7c7b5" },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+// ================= CARD CLICK EVENTS =================
+document.getElementById("player1Card").addEventListener("click", () => {
+  renderChart([
+    {
+      label: p1Label + " Accuracy %",
+      data: p1ChartData,
+      borderColor: "#c9a24d",
+      tension: 0.4
+    }
+  ]);
+});
+
+document.getElementById("player2Card").addEventListener("click", () => {
+  renderChart([
+    {
+      label: p2Label + " Accuracy %",
+      data: p2ChartData,
+      borderColor: "#6bbf9c",
+      tension: 0.4
+    }
+  ]);
+});
+
+document.getElementById("compareBtn").addEventListener("click", () => {
+  renderChart([
+    {
+      label: p1Label,
+      data: p1ChartData,
+      borderColor: "#c9a24d",
+      tension: 0.4
+    },
+    {
+      label: p2Label,
+      data: p2ChartData,
+      borderColor: "#6bbf9c",
+      tension: 0.4
+    }
+  ]);
+});
 
 console.log("Snooker Video Analyst loaded");

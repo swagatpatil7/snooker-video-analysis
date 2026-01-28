@@ -316,3 +316,21 @@ footer{
   font-size:18px;
   color:var(--accent);
 }
+
+.clickable{
+  cursor:pointer;
+  transition:transform 0.2s ease;
+}
+
+.clickable:hover{
+  transform:scale(1.02);
+}
+
+.chart{
+  height:300px;
+}
+
+canvas{
+  width:100% !important;
+  height:100% !important;
+}
